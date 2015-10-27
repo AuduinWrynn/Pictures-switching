@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片切换</title>
+    <style>
+        .container{
+            position: relative;
+            top: 40px;
+            left: 270px;
+            border: 9px solid #b5c4ee;
+            border-radius: 5px;
+            width: 700px;
+            height: 500px;
+            display:inline-block;
+            z-index: 1;
+        }
+        #img{
+            width: 700px;
+            height: 500px;
+            position: absolute;
+
+        }
+        input{
+            background-color: #b5bbde;
+            font-size: 14px;
+            padding: 1px;
+        }
+        input#loop{
+            margin-left: 35%;
+        }
+        input#order{
+            margin-left: 192px;
+        }
+        #left,#right{
+            width: 60px;
+            height: 40px;
+            z-index: 2;
+        }
+        #left{
+            position: absolute;
+            left: 160px;
+            top: 50%;
+        }
+        #right{
+            position: absolute;
+            right: 160px;
+            top: 49%;
+        }
+        #span,#text{
+            position: absolute;
+            z-index: 99;
+            text-align: center;
+            font-size: medium;
+            color: aqua;
+            font-family: 'Microsoft Yahei';
+        }
+        #span{
+            left: 46%;
+            top: 8px;
+        }
+        #text{
+            bottom: 8px;
+            left: 45%;
+        }
+    </style>
+    <script>
+        window.onload = function (){
+            var loop = document.getElementById("loop");
+            var order = document.getElementById("order");
+            var left = document.getElementById("left");
+            var right = document.getElementById("right");
+            var span = document.getElementById("span");
+            var text = document.getElementById("text");
+            var img = document.getElementById("img");
+            var arrUrl = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg'];
+            var arrText = ['Sunset','Tiger','Lake','City','Flowers'];
+            var num = 0;
+            function Tab(){
+                span.innerHTML = (num+1)+'/'+arrUrl.length;
+                img.src = arrUrl[num];
+                text.innerHTML = arrText[num];
+            }
+            function defalut(){
+                right.onclick = function(){
+                    num++;
+                    if(num == arrUrl.length){
+                        num = 0;
+                        Tab();
+                    }else{
+                        Tab();
+                    }
+                };
+                left.onclick = function(){
+                    num--;
+                    if(num == -1){
+                        num = arrUrl.length-1;
+                        Tab();
+                    }else{
+                        Tab();
+                    }
+                };
+            }
+            defalut();
+            loop.onclick = defalut();
+            order.onclick = function(){
+                right.onclick = function(){
+                    num++;
+                    if(num >= arrUrl.length){
+                        alert("已经是最后一张啦~~");
+                    }else{
+                        Tab();
+                    }
+                };
+                left.onclick = function(){
+                    num--;
+                    if(num <= -1){
+                        alert("已经是第一张啦~~");
+                    }else{
+                        Tab();
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+     <input id="loop" type="button" value="循环跳转"/>
+     <input id="order" type="button" value="顺序跳转"/>
+     <div class="container">
+         <span id="span">1/5</span>
+         <p id="text">Sunset</p>
+         <img id="img" src="img/1.jpg"/>
+     </div>
+         <img id="left" src="img/left.jpg" title="上一张">
+         <img id="right" src="img/right.jpg" title="下一张">
+</body>
+</html>
